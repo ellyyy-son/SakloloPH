@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ post.title }}</h2>
+<p><strong>Location:</strong> {{ post.location }}</p>
+<p><strong>Category:</strong> {{ post.category }}</p>
+<p><strong>Description:</strong> {{ post.description }}</p>
+<p><strong>Posted on:</strong> {{ post.date }}</p>
+<p><strong>Votes:</strong> {{ post.vote_score }}</p>
+
+<form action="{% url 'report:upvote_post' post.pk %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">👍 Upvote ({{ post.upvotes }})</button>
+</form>
+
+<form action="{% url 'report:downvote_post' post.pk %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">👎 Downvote ({{ post.downvotes }})</button>
+</form>
+
+{% for image in post.images.all %}
+    <img src="{{ image.image.url }}" alt="{{ image.description }}">
+{% endfor %}
+
+<p><a href="{% url 'report:post_list' %}">Return to the List</a></p>
+{% endblock %}

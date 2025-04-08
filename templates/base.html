@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Saklolo PH</h1>
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        {% else %}
+        <a href="{% url 'login' %}">Please log in to access the posts.</a>
+        {% endif %}
+    </div>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

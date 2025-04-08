@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Report a New Problem {% endblock %}
+{% block content %}
+
+<h1> Report a New Problem: </h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  
+
+    <label for="id_image">Upload images (hold Ctrl or Cmd to select multiple):</label>
+    <input type="file" name="image" id="id_image" multiple>
+    <button type="submit">Submit Report</button>
+</form>
+
+{% endblock %}
