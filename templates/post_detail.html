@@ -4,26 +4,162 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<h2>{{ post.title }}</h2>
-<p><strong>Location:</strong> {{ post.location }}</p>
-<p><strong>Category:</strong> {{ post.category }}</p>
-<p><strong>Description:</strong> {{ post.description }}</p>
-<p><strong>Posted on:</strong> {{ post.date }}</p>
-<p><strong>Votes:</strong> {{ post.vote_score }}</p>
+<style>
+    body {
+        background: linear-gradient(to right, #fff7b2, #ffe97f);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
 
-<form action="{% url 'report:upvote_post' post.pk %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit">👍 Upvote ({{ post.upvotes }})</button>
-</form>
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        padding: 60px 20px;
+    }
 
-<form action="{% url 'report:downvote_post' post.pk %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit">👎 Downvote ({{ post.downvotes }})</button>
-</form>
+    .decor-left,
+    .decor-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        background: radial-gradient(circle at center, #fcd34d50, transparent 70%);
+        z-index: 1;
+    }
 
-{% for image in post.images.all %}
-    <img src="{{ image.image.url }}" alt="{{ image.description }}">
-{% endfor %}
+    .decor-left {
+        left: 0;
+        background: radial-gradient(circle at center, #fde68a80, transparent 70%);
+    }
 
-<p><a href="{% url 'report:post_list' %}">Return to the List</a></p>
+    .decor-right {
+        right: 0;
+        background: radial-gradient(circle at center, #fdba7480, transparent 70%);
+    }
+
+    .post-container {
+        max-width: 800px;
+        width: 100%;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 10;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #f97316;
+    }
+
+    .post-info p {
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    .vote-forms {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .vote-forms form {
+        display: inline;
+    }
+
+    .vote-forms button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        color: white;
+        background: linear-gradient(to right, #38bdf8, #0ea5e9);
+        transition: background 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .vote-forms button:hover {
+        background: linear-gradient(to right, #0ea5e9, #0284c7);
+        transform: translateY(-2px);
+    }
+
+    .post-images {
+        margin-top: 25px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .post-images img {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        text-decoration: none;
+        font-size: 16px;
+        background: linear-gradient(to right, #f7b733, #fc4a1a);
+        color: white;
+        padding: 10px 18px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-link:hover {
+        background: linear-gradient(to right, #fc4a1a, #f7b733);
+        transform: translateY(-1px);
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="decor-left"></div>
+    <div class="decor-right"></div>
+
+    <div class="post-container">
+        <h2>{{ post.title }}</h2>
+
+        <div class="post-info">
+            <p><strong>📍 Location:</strong> {{ post.location }}</p>
+            <p><strong>📂 Category:</strong> {{ post.category }}</p>
+            <p><strong>📝 Description:</strong> {{ post.description }}</p>
+            <p><strong>📅 Posted on:</strong> {{ post.date }}</p>
+            <p><strong>⭐ Votes:</strong> {{ post.vote_score }}</p>
+            <p><strong>⏳ Status:</strong> Currently Processing</p>
+        </div>
+
+        <div class="vote-forms">
+            <form action="{% url 'report:upvote_post' post.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">👍 Upvote ({{ post.upvotes }})</button>
+            </form>
+
+            <form action="{% url 'report:downvote_post' post.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">👎 Downvote ({{ post.downvotes }})</button>
+            </form>
+        </div>
+
+        {% if post.images.all %}
+            <div class="post-images">
+                {% for image in post.images.all %}
+                    <img src="{{ image.image.url }}" alt="{{ image.description }}">
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <a href="{% url 'report:post_list' %}" class="back-link">← Return to Posts</a>
+    </div>
+</div>
 {% endblock %}

@@ -5,12 +5,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, PostImage
 from .forms import PostForm, PostImageForm
 from django.urls import reverse_lazy
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 
+
+def home(request):
+    return render(request, 'landing_page.html')
+
+def request_view(request):
+    user_posts = Post.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'requests.html', {'posts': user_posts})
+
+def contact_view(request):
+    return render(request, 'contact.html')
 
 class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
+    paginate_by = 5  
+    ordering = ['-date']  
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
@@ -21,18 +33,20 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    template_name = "post_create.html"
     form_class = PostForm
+    template_name = 'post_create.html'
 
     def form_valid(self, form):
-        post = form.save(commit=False)
-        post.save()
+        form.instance.user = self.request.user
+        response = super().form_valid(form)
 
-        images = self.request.FILES.getlist('image')  
-        for image in images:
-            PostImage.objects.create(post=post, image=image)
+        for uploaded_file in self.request.FILES.getlist('image'):
+            PostImage.objects.create(
+                post=self.object,
+                image=uploaded_file
+            )
 
-        return redirect(self.get_success_url())
+        return response
 
     def get_success_url(self):
         return reverse_lazy('report:post_list')

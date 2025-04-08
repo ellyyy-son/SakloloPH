@@ -9,6 +9,11 @@ urlpatterns = [
     path('post/<int:pk>/update', PostUpdateView.as_view(), name='post_update'),
     path('post/<int:pk>/upvote/', views.upvote_post, name='upvote_post'),
     path('post/<int:pk>/downvote/', views.downvote_post, name='downvote_post'),
+    path('', views.home, name='home'), 
+    path('home/', views.home, name='home'), 
+    path('requests/', views.request_view, name='requests'),
+    path('contacts/', views.contact_view, name='contact'),
+
 ]
 
 app_name = "report"

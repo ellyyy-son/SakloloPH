@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.urls import reverse
 
 
@@ -11,6 +12,7 @@ CATEGORY_CHOICES = [
 
 
 class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     location = models.CharField(max_length=255)
@@ -18,7 +20,6 @@ class Post(models.Model):
     description = models.TextField()
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
-    is_resolved = models.BooleanField(default=False)
 
     def vote_score(self):
         return self.upvotes - self.downvotes

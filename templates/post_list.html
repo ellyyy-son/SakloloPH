@@ -2,16 +2,131 @@
 {% load static %}
 
 {% block title %} Posts List {% endblock %}
+
 {% block content %}
-<h2>Current Posts:</h2>
+<style>
+    body {
+        background: linear-gradient(to right, #fff7b2, #ffe97f);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .page-title {
+        text-align: center;
+        color: #333;
+        font-size: 36px;
+        font-weight: bold;
+        margin: 30px 0 20px;
+        background: linear-gradient(to right, #fbd786, #f7797d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .post-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 20px 30px;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .post-item {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .post-title {
+        font-size: 22px;
+        color: #f97316;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .post-title:hover {
+        text-decoration: underline;
+    }
+
+    .category {
+        background: linear-gradient(to right, #fbbf24, #f59e0b);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .post-images {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .post-image img {
+        max-width: 100%;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    .vote-score {
+        margin-top: 15px;
+        font-weight: 500;
+        color: #444;
+    }
+
+    .add-post-button {
+        display: block;
+        background: linear-gradient(to right, #f7b733, #fc4a1a);
+        color: white;
+        padding: 14px 24px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 40px auto 20px;
+        text-align: center;
+        width: fit-content;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .add-post-button:hover {
+        background: linear-gradient(to right, #fc4a1a, #f7b733);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<h2 class="page-title">Problems Near You</h2>
+
 <ul class="post-list">
     {% for post in post_list %}
         <li class="post-item">
             <div class="post-header">
-                <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                <h3><a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title }}</a></h3>
                 <span class="category">{{ post.category }}</span>
             </div>
-            
+
             {% if post.images.all %}
                 <div class="post-images">
                     {% for image in post.images.all %}
@@ -23,10 +138,26 @@
             {% endif %}
 
             <div class="vote-score">
-                <span>Score: {{ post.vote_score }}</span>
+                Score: {{ post.vote_score }}
             </div>
         </li>
     {% endfor %}
 </ul>
-<p><a href="{% url 'report:post_create' %}">Add a New Post</a></p>
+
+<div style="text-align: center; margin-top: 30px;">
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="add-post-button" style="margin-bottom: 10px;">
+                Previous Posts
+            </a>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="add-post-button">
+                View More Posts
+            </a>
+        {% endif %}
+    {% endif %}
+</div>
+
+<a href="{% url 'report:post_create' %}" class="add-post-button">Report a New Problem</a>
 {% endblock %}

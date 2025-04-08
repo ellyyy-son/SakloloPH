@@ -127,8 +127,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = "/posts/list"
-LOGOUT_REDIRECT_URL = "/accounts/login"
+LOGIN_REDIRECT_URL = "/requests"
+LOGOUT_REDIRECT_URL = "/home"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'

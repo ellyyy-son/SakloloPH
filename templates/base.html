@@ -1,26 +1,149 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} {% endblock %}</title>
+    <title>{% block title %}Saklolo PH{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fffef4;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #fcd34d, #fbbf24);
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .site-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #1f2937;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        
+        .nav-button {
+            background: none;
+            border: none;
+            font: inherit;
+            color: #1f2937;
+            cursor: pointer;
+            padding: 0;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-button:hover {
+            color: #ef4444;
+        }
+
+        .navbar ul li a:hover {
+            color: #ef4444;
+        }
+
+        .auth-links {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        .auth-links a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #1f2937;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .auth-links a:hover {
+            color: #ef4444;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+            margin: 0;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .footer {
+            background-color: #fde68a;
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 14px;
+            border-top: 1px solid #fcd34d;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Saklolo PH</h1>
-        {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-        {% else %}
-        <a href="{% url 'login' %}">Please log in to access the posts.</a>
-        {% endif %}
+    <div class="navbar">
+        <div class="site-title">Saklolo PH</div>
+
+        <ul>
+            <li><a href="{% url 'report:home' %}">Home</a></li>
+            <li><a href="{% url 'report:post_list' %}">See Posts</a></li>
+            <li><a href="{% url 'report:post_create' %}">Report a Problem</a></li>
+            <li><a href="{% url 'report:requests' %}">Your Requests</a></li>
+            <li><a href="{% url 'report:contact' %}">Contact Us</a></li>
+        
+            {% if user.is_authenticated %}
+                <li>
+                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-button">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </div>
+
     <hr>
-    {% block content %}
-    {% endblock %}
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Saklolo PH. All rights reserved.
+    </div>
 </body>
 
 </html>

@@ -2,16 +2,108 @@
 {% load static %}
 
 {% block title %} Report a New Problem {% endblock %}
+
 {% block content %}
+<div class="report-page">
+    <style>
+        .report-page {
+            background: linear-gradient(to right, #fff7b2, #ffe97f);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
 
-<h1> Report a New Problem: </h1>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}  
+        .report-page .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    <label for="id_image">Upload images (hold Ctrl or Cmd to select multiple):</label>
-    <input type="file" name="image" id="id_image" multiple>
-    <button type="submit">Submit Report</button>
-</form>
+        .report-page h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fbd786, #f7797d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
+        .report-page form label {
+            display: block;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fff7b2, #ffe97f);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .report-page form input[type="text"],
+        .report-page form input[type="email"],
+        .report-page form input[type="file"],
+        .report-page form textarea,
+        .report-page form select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        .report-page form input[type="file"] {
+            border: none;
+            padding-left: 0;
+        }
+
+        .report-page form input:focus,
+        .report-page form textarea:focus,
+        .report-page form select:focus {
+            outline: none;
+            border-color: #f7a440;
+        }
+
+        .report-page button[type="submit"] {
+            display: block;
+            margin: 30px auto 0;
+            background: linear-gradient(to right, #f7b733, #fc4a1a);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .report-page button[type="submit"]:hover {
+            background: linear-gradient(to right, #fc4a1a, #f7b733);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Report a New Problem</h1>
+        <form method="POST" enctype="multipart/form-data" class="report-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <label for="id_image">Upload images (hold Ctrl or Cmd to select multiple):</label>
+            <input type="file" name="image" id="id_image" multiple>
+
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

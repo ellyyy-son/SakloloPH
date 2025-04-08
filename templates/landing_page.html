@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Saklolo PH{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(to bottom, #fff7b2, #ffe97f);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 80px 20px 60px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #1f2937;
+    }
+
+    .hero p {
+        max-width: 600px;
+        margin: 0 auto 30px;
+        color: #4b5563;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .hero .cta-btn {
+        background: linear-gradient(to right, #f59e0b, #f97316);
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .hero .cta-btn:hover {
+        background: linear-gradient(to right, #f97316, #ea580c);
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 28px;
+        margin-top: 60px;
+        color: #1f2937;
+    }
+
+    .steps {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 40px auto 80px;
+        max-width: 1000px;
+        padding: 0 20px;
+    }
+
+    .step-box {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        flex: 1 1 250px;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .step-box h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #f59e0b;
+        margin-bottom: 15px;
+    }
+
+    .step-box p {
+        font-size: 14px;
+        color: #374151;
+    }
+
+    .footer {
+        background-color: #fde68a;
+        text-align: center;
+        padding: 20px;
+        color: #555;
+        font-size: 14px;
+        border-top: 1px solid #fcd34d;
+    }
+</style>
+
+<div class="hero">
+    <h1>Voice Your Concerns.<br>Get Action.</h1>
+    <p>
+        Help improve your community by reporting public issues like broken roads, trash, or safety concerns. Your voice helps us act faster and smarter.
+    </p>
+
+    {% if user.is_authenticated %}
+        <h2> Welcome, {{user.name}} <h2>
+    {% else %}
+        <a href="{% url 'login' %}" class="cta-btn">Get Started</a>
+    {% endif %}
+</div>
+
+<h2 class="section-title">How It Works</h2>
+
+<div class="steps">
+    <div class="step-box">
+        <h3>STEP 1</h3>
+        <p>Describe the problem clearly and upload any helpful images or media. Our team will process it securely.</p>
+    </div>
+    <div class="step-box">
+        <h3>STEP 2</h3>
+        <p>Our system routes the report to the correct local or national authorities who can act on it.</p>
+    </div>
+    <div class="step-box">
+        <h3>STEP 3</h3>
+        <p>Track updates and vote on other reports to help prioritize what matters most to the community.</p>
+    </div>
+</div>
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="steps">
+    <div class="step-box">
+        <h3>What is Saklolo PH?</h3>
+        <p>A reporting tool that connects citizens with local authorities for public issues like damaged roads or waste.</p>
+    </div>
+    <div class="step-box">
+        <h3>Is my report anonymous?</h3>
+        <p>You need to log in, but your personal info is kept private unless stated otherwise.</p>
+    </div>
+    <div class="step-box">
+        <h3>How soon are problems resolved?</h3>
+        <p>This depends on the issue and the relevant agency. We route reports instantly.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Contact Us {% endblock %}
+
+{% block content %}
+<div class="contact-page">
+    <style>
+        .contact-page {
+            background: linear-gradient(to right, #fff7b2, #ffe97f);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .contact-page .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-page h1 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fbd786, #f7797d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fff7b2, #ffe97f);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .contact-page form label {
+            display: block;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .contact-page form input[type="text"],
+        .contact-page form input[type="email"],
+        .contact-page form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        .contact-page form input:focus,
+        .contact-page form textarea:focus {
+            outline: none;
+            border-color: #f7a440;
+        }
+
+        .contact-page button[type="submit"] {
+            display: block;
+            margin: 30px auto 0;
+            background: linear-gradient(to right, #f7b733, #fc4a1a);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-page button[type="submit"]:hover {
+            background: linear-gradient(to right, #fc4a1a, #f7b733);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Contact Us</h1>
+        <form method="POST" action="#">
+            {% csrf_token %}
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Juan Dela Cruz">
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="juan@example.com">
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Concern about service">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Type your message here..."></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
