@@ -11,17 +11,19 @@ Go to the folder and run "python manage.py runserver"
 Start at localhost:8000
 
 Account Details for Testing:
-  USERNAME: USER
-  PASSWORD: guest_user
+
+    USERNAME: USER
+    
+    PASSWORD: guest_user
 
 Links to visit:
 
-http://localhost:8000/home/
+    http://localhost:8000/home/
 
-http://localhost:8000/posts/list
+    http://localhost:8000/posts/list
 
-http://localhost:8000/category/
+    http://localhost:8000/category/
 
-http://localhost:8000/requests/
+    http://localhost:8000/requests/
 
-http://localhost:8000/contacts/
+    http://localhost:8000/contacts/
