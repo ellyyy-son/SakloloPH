@@ -18,6 +18,9 @@ def request_view(request):
 def contact_view(request):
     return render(request, 'contact.html')
 
+def category_view(request):
+    return render(request, 'category.html')
+
 class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
@@ -49,6 +52,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'post_create.html'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        category = self.request.GET.get('category')
+        if category:
+            initial['category'] = category
+        return initial
 
     def form_valid(self, form):
         form.instance.user = self.request.user
