@@ -11,6 +11,7 @@ Account Details for Testing:
   PASSWORD: guest_user
 
 Links to visit:
+
 http://localhost:8000/home/
 
 http://localhost:8000/posts/list
