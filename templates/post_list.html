@@ -115,9 +115,45 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     }
+
+    .category-select {
+        padding: 12px 18px;
+        border-radius: 30px;
+        border: none;
+        background: linear-gradient(to right, #fcd34d, #fbbf24);
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        appearance: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .category-select:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .category-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5);
+    }
 </style>
 
 <h2 class="page-title">Problems Near You</h2>
+
+<form method="get" style="text-align: center; margin-bottom: 30px;">
+    <label for="category" style="font-size: 18px; margin-right: 10px; font-weight: 500; color: #333;">
+        Filter by Category:
+    </label>
+    <select name="category" id="category" onchange="this.form.submit()" class="category-select">
+        <option value="">All Categories</option>
+        {% for cat in categories %}
+            <option value="{{ cat }}" {% if active_category == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+    </select>
+</form>
 
 <ul class="post-list">
     {% for post in post_list %}

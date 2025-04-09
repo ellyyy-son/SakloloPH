@@ -2,7 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Post, PostImage
+from .models import Post, PostImage, CATEGORY_CHOICES
 from .forms import PostForm, PostImageForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
@@ -21,8 +21,22 @@ def contact_view(request):
 class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
-    paginate_by = 5  
-    ordering = ['-date']  
+    paginate_by = 5
+    ordering = ['-date']
+    context_object_name = 'post_list'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category__iexact=category)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_category'] = self.request.GET.get('category')
+        context['categories'] = [cat[0] for cat in CATEGORY_CHOICES]
+        return context
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
