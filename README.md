@@ -1,6 +1,10 @@
 Saklolo PH Testing:
 
 Install all in requirements.txt
+  
+  Go to terminal
+  
+  Write pip install -r requirements.txt
 
 Go to the folder and run "python manage.py runserver"
 
