@@ -1,3 +1,5 @@
+Saklolo PH Testing:
+
 Install all in requirements.txt
 
 Go to the folder and run "python manage.py runserver"
@@ -10,7 +12,11 @@ Account Details for Testing:
 
 Links to visit:
 http://localhost:8000/home/
+
 http://localhost:8000/posts/list
+
 http://localhost:8000/category/
+
 http://localhost:8000/requests/
+
 http://localhost:8000/contacts/
