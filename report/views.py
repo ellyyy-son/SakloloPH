@@ -6,11 +6,13 @@ from .models import Post, PostImage, CATEGORY_CHOICES
 from .forms import PostForm, PostImageForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
     return render(request, 'landing_page.html')
 
+@login_required
 def request_view(request):
     user_posts = Post.objects.filter(user=request.user).order_by('-date')
     return render(request, 'requests.html', {'posts': user_posts})
@@ -18,6 +20,7 @@ def request_view(request):
 def contact_view(request):
     return render(request, 'contact.html')
 
+@login_required
 def category_view(request):
     return render(request, 'category.html')
 
